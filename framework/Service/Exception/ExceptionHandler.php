@@ -43,7 +43,7 @@ class ExceptionHandler implements ExceptionHandlerContract {
         }
 
         //生成标准的错误响应
-        return $this->objApp->make(Response::class, ['arrContent' => ['success' => 0, 'err_msg' => '请求错误，请稍后再试']]);
+        return $this->objApp->make(Response::class, ['arrContent' => ['success' => 0, 'err_msg' => '请求错误，请稍后再试'.$objException->getMessage()]]);
     }
 
 }

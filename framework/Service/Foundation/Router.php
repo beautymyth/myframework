@@ -36,7 +36,8 @@ class Router {
      */
     protected function getMiddleware($objRequest) {
         $arrMiddleware = $this->objApp->make('config')->get('app.middleware.' . $objRequest->getSecondDir());
-        if (empty($arrMiddleware)) {
+        //未配置则使用web的中间件
+        if ($arrMiddleware === '') {
             $arrMiddleware = $this->objApp->make('config')->get('app.middleware.web');
         }
         return $arrMiddleware;
