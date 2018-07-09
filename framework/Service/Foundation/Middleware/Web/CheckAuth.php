@@ -10,20 +10,26 @@ use Framework\Service\Foundation\Application;
 use Framework\Service\Exception\AuthException;
 
 /**
- * auth检查
+ * 用户检查
  */
 class CheckAuth {
 
+    /**
+     * 应用实例
+     */
     protected $objApp;
-    
+
     /**
      * 不需要检查的uri规则
+     * 1.login页面
      */
     protected $arrNotCheckPattern = [
-        '/^\s*$/i',
-        '/^([a-z]+\/)*([a-z]+)$/i'
+        '/^(.*)(\/)?login(\/[a-z]+)*$/i'
     ];
 
+    /**
+     * 创建用户检查实例
+     */
     public function __construct(Application $objApp) {
         $this->objApp = $objApp;
     }
@@ -32,15 +38,30 @@ class CheckAuth {
      * 中间件处理
      */
     public function handle(Request $objRequest, Closure $mixNext) {
-        if (!$this->checkAuth($objRequest)) {
-            throw new AuthException('登录验证失败');
+        if ($this->needCheck($objRequest)) {
+            if (!$this->checkAuth($objRequest)) {
+                throw new AuthException('登录验证失败');
+            }
         }
-
+        //运行下一个中间件
         return $mixNext($objRequest);
     }
 
     /**
-     * auth检查
+     * uri是否需要进行检查
+     */
+    protected function needCheck($objRequest) {
+        $strUri = $objRequest->getUri();
+        foreach ($this->arrNotCheckPattern as $strPattern) {
+            if (preg_match($strPattern, $strUri)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 用户检查
      */
     protected function checkAuth($objRequest) {
         $strCookie = $objRequest->getCookie('UserInfo');
@@ -55,6 +76,7 @@ class CheckAuth {
         }
         //生成用户信息
         $objUser = new User($arrCookie);
+        //检查用户信息
         if (!$objUser->check()) {
             return false;
         }

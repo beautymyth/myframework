@@ -4,7 +4,6 @@
  * 网站基本的配置
  */
 return [
-    'timezone' => 'UTC',
     /**
      * 外观
      * 1.提供框架类中方法的静态访问
@@ -12,7 +11,9 @@ return [
     'facade' => [
         'Config' => Framework\Facade\Config::class,
         'Log' => Framework\Facade\Log::class,
-        'Cache' => Framework\Facade\Cache::class
+        'Cache' => Framework\Facade\Cache::class,
+        'Request' => Framework\Facade\Request::class,
+        'User' => Framework\Facade\User::class
     ],
     /**
      * 服务提供者
@@ -62,7 +63,8 @@ return [
      */
     'redirect' => [
         'uri_wrong' => 'http://www.sina.com',
-        'auth_wrong' => 'http://www.baidu.com'
+        'auth_wrong' => 'http://www.baidu.com',
+        'controller_wrong' => 'http://www.163.com'
     ],
     /**
      * 路由
@@ -70,6 +72,7 @@ return [
      * 2.如果没配置，则使用默认uri结构处理
      */
     'route' => [
+        'login' => 'Common\\LoginController'
     ]
 ];
 

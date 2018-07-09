@@ -2,13 +2,19 @@
 
 namespace Framework\Service\Auth;
 
+/**
+ * 用户
+ */
 class User {
 
     /**
      * 用户信息
      */
     protected $arrUserInfo = [];
-
+    
+    /**
+     * 创建用户实例
+     */
     public function __construct($arrUserInfo) {
         $this->arrUserInfo = $arrUserInfo;
     }
@@ -22,11 +28,17 @@ class User {
         }
         return false;
     }
-
+    
+    /**
+     * 获取用户Id
+     */
     public function getUserId() {
         return $this->arrUserInfo['user_id'];
     }
-
+    
+    /**
+     * 获取用户名称
+     */
     public function getUserName() {
         return $this->arrUserInfo['user_name'];
     }

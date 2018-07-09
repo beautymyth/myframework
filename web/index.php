@@ -14,7 +14,7 @@ $objApp = new Framework\Service\Foundation\Application(realpath(__DIR__ . '/../'
 //内核
 $objKernel = $objApp->make(Framework\Service\Foundation\HttpKernel::class);
 
-setcookie('UserInfo', json_encode(['user_id' => 1, 'user_name' => '小胖子']), time() + 3600, '/', 'beautymyth.cn');
+//setcookie('UserInfo', json_encode(['user_id' => 1, 'user_name' => '小胖子']), time() + 30*24*3600, '/', 'beautymyth.cn');
 //var_dump(ini_get('date.timezone'));
 //var_dump(date('Y-m-d H:i:s', time() + 3600));
 //2018-07-07T05:16:13.522Z
@@ -28,6 +28,7 @@ $objResponse = $objKernel->handle();
 //$objApp->make(\App\Service\test::class);
 //响应
 //echo 'hello world' . time() . '<br>';
+var_dump(1234);
 if (method_exists($objResponse, 'send')) {
     $objResponse->send();
 }
