@@ -8,7 +8,7 @@ class test {
 
     protected $objCache;
 
-    public function __construct(Cache $objCache,$fsd) {
+    public function __construct(Cache $objCache) {
         $this->objCache = $objCache;
     }
 

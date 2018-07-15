@@ -9,14 +9,21 @@ use Framework\Contract\Cache\Cache as CacheContract;
  */
 class CacheRedis implements CacheContract {
 
+    /**
+     * 复用redis连接类
+     */
+    use RedisConnect;
+
     protected $value = '';
 
     public function get() {
-        return $this->value;
+        $objReadHander = $this->getReadHander();
+        return is_null($objReadHander) ? '' : $objReadHander->get('test');
     }
 
     public function set($value) {
-        $this->value = 'redis' . $value;
+        $objWriteHander = $this->getWriteHander();
+        return is_null($objWriteHander) ? false : $objWriteHander->set('test', $value);
     }
 
 }

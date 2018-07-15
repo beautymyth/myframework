@@ -1,6 +1,6 @@
 <?php
 
-echo '<pre>';
+//echo '<pre>';
 
 //设置项目根目录
 define('BASE_PATH', realpath(__DIR__ . '/../'));
@@ -28,7 +28,9 @@ $objResponse = $objKernel->handle();
 //$objApp->make(\App\Service\test::class);
 //响应
 //echo 'hello world' . time() . '<br>';
-var_dump(1234);
+//var_dump(1234);
 if (method_exists($objResponse, 'send')) {
     $objResponse->send();
+}else{
+    var_dump(11);
 }

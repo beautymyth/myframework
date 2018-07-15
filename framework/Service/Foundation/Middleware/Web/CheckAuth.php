@@ -40,7 +40,7 @@ class CheckAuth {
     public function handle(Request $objRequest, Closure $mixNext) {
         if ($this->needCheck($objRequest)) {
             if (!$this->checkAuth($objRequest)) {
-                throw new AuthException('登录验证失败');
+                throw new AuthException('账号错误');
             }
         }
         //运行下一个中间件

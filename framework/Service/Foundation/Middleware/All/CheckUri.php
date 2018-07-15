@@ -23,7 +23,7 @@ class CheckUri {
     ];
 
     /**
-     * 不需要重定向的访问
+     * 不需要重定向的uri
      * 1.api
      */
     protected $strNotRedirectPattren = '/^(api)\/.+$/i';
@@ -35,7 +35,7 @@ class CheckUri {
         if (!$this->checkUri($objRequest)) {
             throw new UriException($this->getMessage($objRequest));
         }
-        
+
         return $mixNext($objRequest);
     }
 
@@ -56,11 +56,14 @@ class CheckUri {
      */
     protected function getMessage($objRequest) {
         if ($objRequest->isAjax()) {
-            return json_encode(['err_msg' => '访问地址错误']);
+            //ajax，错误信息
+            return json_encode(['err_msg' => '请求地址错误']);
         }
         if (preg_match($this->strNotRedirectPattren, $objRequest->getUri())) {
-            return json_encode(['err_msg' => '访问地址错误']);
+            //非ajax，不需要重定向
+            return json_encode(['err_msg' => '请求地址错误']);
         }
+        //非ajax，需要重定向
         return json_encode(['Location' => true]);
     }
 

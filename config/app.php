@@ -28,6 +28,7 @@ return [
          * 框架
          */
         Framework\Provider\Cache\CacheServiceProvider::class,
+        Framework\Provider\View\ViewServiceProvider::class,
     /**
      * 应用
      */
@@ -62,17 +63,37 @@ return [
      * 重定向配置
      */
     'redirect' => [
+        'uri_empty' => 'http://www.qq.com',
         'uri_wrong' => 'http://www.sina.com',
         'auth_wrong' => 'http://www.baidu.com',
         'controller_wrong' => 'http://www.163.com'
     ],
+    /**
+     * 显式的二级目录
+     * 1.不配置默认为web
+     */
+    'second_dir' => ['api'],
+    /**
+     * uri解析控制器规则
+     * 1.配置的二级目录，认为uri包含控制器与控制器方法
+     */
+    'uri_resolve_rule' => ['api'],
     /**
      * 路由
      * 1.配置uri对应的控制器
      * 2.如果没配置，则使用默认uri结构处理
      */
     'route' => [
-        'login' => 'Common\\LoginController'
+        'login' => 'Web\\Common\\LoginController',
+        'login/login' => 'Web\\Common\\LoginController@login'
+    ],
+    /**
+     * 视图
+     * 1.配置uri对应的视图
+     * 2.如果没配置，则使用默认uri结构处理
+     */
+    'view' => [
+        'login' => 'web/common/login.view'
     ]
 ];
 

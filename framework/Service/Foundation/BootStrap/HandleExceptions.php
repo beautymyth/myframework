@@ -21,7 +21,6 @@ class HandleExceptions {
 
     /**
      * 处理未捕捉的异常
-     * @param Exception $objException
      */
     public function handleException(Exception $objException) {
         $this->getHandleException()->report($objException);

@@ -69,7 +69,7 @@ class Request {
         $strUri = $_SERVER['REQUEST_URI'];
         $strUri = trim($strUri, '/');
         $strUri = explode('?', $strUri)[0];
-        return $strUri;
+        return strtolower($strUri);
     }
 
     /**
@@ -86,7 +86,7 @@ class Request {
      * 获取请求的二级目录
      */
     public function getSecondDir() {
-        return explode('/', $this->getUri())[0];
+        return strtolower(explode('/', $this->getUri())[0]);
     }
 
 }

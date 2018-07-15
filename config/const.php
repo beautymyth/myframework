@@ -23,7 +23,11 @@ return [
         /**
          * SQLERR日志
          */
-        'LOG_SQLERR' => 'SQLERR'
+        'LOG_SQLERR' => 'SQLERR',
+        /**
+         * REDISERR日志
+         */
+        'LOG_REDISERR' => 'REDISERR'
     ]
 ];
 

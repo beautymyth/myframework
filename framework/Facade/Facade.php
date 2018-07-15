@@ -28,7 +28,7 @@ abstract class Facade {
      * 获取外观名称
      */
     protected static function getFacadeAccessor() {
-        throw new Exception('获取外观名称失败');
+        throw new Exception('获取外观名称错误');
     }
 
     /**
@@ -59,7 +59,7 @@ abstract class Facade {
         $objInstance = static::getFacadeInstance();
 
         if (!$objInstance) {
-            throw new Exception('外观解析失败');
+            throw new Exception('外观解析错误');
         }
 
         //执行外观实例中方法

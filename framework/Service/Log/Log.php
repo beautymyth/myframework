@@ -2,6 +2,8 @@
 
 namespace Framework\Service\Log;
 
+use Framework\Facade\Config;
+
 class Log {
 
     /**
@@ -20,11 +22,6 @@ class Log {
     private $intLogSize = 20971520;
 
     /**
-     * 日志类型数组
-     */
-    private $arrValidType = array('INFO', 'ERR', 'SQLINFO', 'SQLERR');
-
-    /**
      * 创建日志实例
      */
     public function __construct($objApp) {
@@ -38,7 +35,7 @@ class Log {
      */
     public function log($strContent = '', $strLogType = 'INFO') {
         //检查日志类型是否正确    
-        if (!in_array($strLogType, $this->arrValidType)) {
+        if (!in_array($strLogType, array_values(Config::get('const.Log')))) {
             return;
         }
 
