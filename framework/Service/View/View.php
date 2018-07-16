@@ -30,7 +30,8 @@ class View {
     public function make($arrData) {
         $strViewPath = $this->getViewPath();
         $strtmp = file_get_contents($strViewPath);
-        exit($strtmp);
+        //todo:解析
+        return $strtmp;
     }
 
     /**
@@ -49,8 +50,8 @@ class View {
             return $strView;
         }
 
-        //抛出异常
-        throw new ControllerException(json_encode(['Location' => true]));
+        //抛出异常，需要重定向
+        throw new ControllerException();
     }
 
     /**

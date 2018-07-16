@@ -39,7 +39,6 @@ class CheckValid {
      * 有效性检查
      */
     protected function checkValid($objRequest) {
-        var_dump('checkValid');
         return true;
     }
 

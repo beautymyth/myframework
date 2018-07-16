@@ -25,11 +25,11 @@ class PageController extends ControllerBase {
 
     public function func() {
         $this->objCache->set(microtime());
-        var_dump($this->objCache->get());
+        return ['success' => 1, 'content' => $this->objCache->get()];
     }
 
     public function funcB() {
-        var_dump('funcB');
+        return 'http://www.163.com';
     }
 
 }

@@ -5,8 +5,8 @@ namespace Framework\Service\Exception;
 use Exception;
 use Framework\Facade\Config;
 use Framework\Facade\Request;
-use Framework\Service\Foundation\Response;
 use Framework\Service\Foundation\Application;
+use Framework\Service\Response\ResponseFactory;
 use Framework\Contract\Exception\ExceptionHandler as ExceptionHandlerContract;
 
 class ExceptionHandler implements ExceptionHandlerContract {
@@ -42,8 +42,9 @@ class ExceptionHandler implements ExceptionHandlerContract {
             return $objException->render($this->objApp, $objException);
         }
 
-        //生成标准的错误响应
-        return $this->objApp->make(Response::class, ['arrContent' => ['success' => 0, 'err_msg' => '请求错误，请稍后再试'.$objException->getMessage()]]);
+        //生成响应
+        $mixResponse = ['err_msg' => '请求错误，请稍后再试' . $objException->getMessage()];
+        return $objApp->make(ResponseFactory::class)->make($mixResponse);
     }
 
 }

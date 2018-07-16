@@ -3,8 +3,8 @@
 namespace Framework\Service\Exception;
 
 use Exception;
-use Framework\Service\Foundation\Response;
 use Framework\Service\Foundation\Application;
+use Framework\Service\Response\ResponseFactory;
 
 /**
  * 应用异常
@@ -16,7 +16,8 @@ class ApplicationException extends Exception {
      * @param Exception $objException
      */
     public function render(Application $objApp, Exception $objException) {
-        return $objApp->make(Response::class, ['arrContent' => ['success' => 0, 'err_msg' => '应用异常，请稍后再试']]);
+        $mixResponse = ['err_msg' => '应用异常，请稍后再试'];
+        return $objApp->make(ResponseFactory::class)->make($mixResponse);
     }
 
 }

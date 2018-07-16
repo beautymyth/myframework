@@ -34,7 +34,7 @@ abstract class Controller {
         //获取数据
         $arrData = $this->getViewData();
         //生成页面
-        View::make($arrData);
+        return View::make($arrData);
     }
 
     /**
@@ -45,13 +45,13 @@ abstract class Controller {
         //获取中间件
         $arrMiddleware = $this->getMiddleware($strMethod);
         //调用中间件
-        (new Pipeline($objApp))
-                ->send($objRequest)
-                ->through($arrMiddleware)
-                ->then(function() use ($strMethod, $arrArguments) {
-                    //执行方法
-                    call_user_func_array([$this, $strMethod], $arrArguments);
-                });
+        return (new Pipeline($objApp))
+                        ->send($objRequest)
+                        ->through($arrMiddleware)
+                        ->then(function() use ($strMethod, $arrArguments) {
+                            //执行方法
+                            return call_user_func_array([$this, $strMethod], $arrArguments);
+                        });
     }
 
     /**

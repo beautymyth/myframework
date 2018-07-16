@@ -3,8 +3,8 @@
 namespace Framework\Service\Exception;
 
 use Exception;
-use Framework\Service\Foundation\Response;
 use Framework\Service\Foundation\Application;
+use Framework\Service\Response\ResponseFactory;
 
 /**
  * 登录异常
@@ -26,7 +26,8 @@ class AuthException extends Exception {
      * @param Exception $objException
      */
     public function render(Application $objApp, Exception $objException) {
-        return $objApp->make(Response::class, ['arrHeader' => ['Location' => [$objApp->make('config')->get('app.redirect.auth_wrong')]]]);
+        $mixResponse = $objApp->make('config')->get('app.redirect.auth_wrong');
+        return $objApp->make(ResponseFactory::class)->make($mixResponse);
     }
 
 }

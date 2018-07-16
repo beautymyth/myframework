@@ -64,7 +64,7 @@ class CheckUri {
             return json_encode(['err_msg' => '请求地址错误']);
         }
         //非ajax，需要重定向
-        return json_encode(['Location' => true]);
+        return '';
     }
 
 }

@@ -3,8 +3,8 @@
 namespace Framework\Service\Exception;
 
 use Exception;
-use Framework\Service\Foundation\Response;
 use Framework\Service\Foundation\Application;
+use Framework\Service\Response\ResponseFactory;
 
 /**
  * 控制器异常
@@ -26,12 +26,14 @@ class ControllerException extends Exception {
      * @param Exception $objException
      */
     public function render(Application $objApp, Exception $objException) {
-        $arrMessage = json_decode($objException->getMessage(), true);
-        if (isset($arrMessage['Location'])) {
+        $mixMessage = json_decode($objException->getMessage(), true);
+        if (is_array($mixMessage)) {
+            $mixResponse = ['err_msg' => $mixMessage['err_msg']];
+        } else {
             //需要重定向
-            return $objApp->make(Response::class, ['arrHeader' => ['Location' => [$objApp->make('config')->get('app.redirect.controller_wrong')]]]);
+            $mixResponse = $objApp->make('config')->get('app.redirect.controller_wrong');
         }
-        return $objApp->make(Response::class, ['arrContent' => ['success' => 0, 'err_msg' => $arrMessage['err_msg']]]);
+        return $objApp->make(ResponseFactory::class)->make($mixResponse);
     }
 
 }

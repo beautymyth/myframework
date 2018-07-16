@@ -1,11 +1,10 @@
 <?php
 
-namespace Framework\Service\Foundation;
+namespace Framework\Service\Response;
 
-/**
- * http响应
- */
-class Response {
+use Framework\Contract\Response\Response as ResponseContract;
+
+class JsonResponse implements ResponseContract {
 
     /**
      * 响应内容

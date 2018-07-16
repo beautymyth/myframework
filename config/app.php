@@ -72,7 +72,7 @@ return [
      * 显式的二级目录
      * 1.不配置默认为web
      */
-    'second_dir' => ['api'],
+    'second_dir' => ['api', 'web'],
     /**
      * uri解析控制器规则
      * 1.配置的二级目录，认为uri包含控制器与控制器方法

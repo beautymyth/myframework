@@ -6,6 +6,7 @@ use Framework\Facade\Config;
 use Framework\Service\Foundation\Request;
 use Framework\Service\Foundation\Pipeline;
 use Framework\Service\Foundation\Application;
+use Framework\Service\Response\ResponseFactory;
 use Framework\Service\Exception\ControllerException;
 
 /**
@@ -51,7 +52,7 @@ class Router {
                         ->send($objRequest)
                         ->through($arrMiddleware)
                         ->then(function($objRequest) {
-                            $this->runController($objRequest);
+                            return $this->runController($objRequest);
                         });
     }
 
@@ -78,7 +79,17 @@ class Router {
         //调用控制器方法
         //暂时不解析方法中的参数，如果需要注入服务，在类的构造方法中注入
         $objControllerInstance = $this->objApp->make($arrController[0]);
-        $objControllerInstance->callAction($arrController[1], $this->objApp, $objRequest);
+        $mixResponse = $objControllerInstance->callAction($arrController[1], $this->objApp, $objRequest);
+
+        //生成响应
+        return $this->toResponse($mixResponse);
+    }
+
+    /**
+     * 生成响应
+     */
+    protected function toResponse($mixResponse) {
+        return $this->objApp->make(ResponseFactory::class)->make($mixResponse);
     }
 
     /**
@@ -107,7 +118,7 @@ class Router {
             throw new ControllerException(json_encode(['err_msg' => '请求地址错误']));
         }
         //非ajax，需要重定向
-        throw new ControllerException(json_encode(['Location' => true]));
+        throw new ControllerException();
     }
 
     /**
