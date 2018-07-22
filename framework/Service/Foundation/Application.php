@@ -2,7 +2,10 @@
 
 namespace Framework\Service\Foundation;
 
+use Framework\Service\Http\HttpRequest;
+use Framework\Service\Http\ConsoleRequest;
 use Framework\Provider\Log\LogServiceProvider;
+use Framework\Contract\Http\Request as RequestContract;
 use Framework\Provider\Exception\ExceptionServiceProvider;
 
 /**
@@ -54,6 +57,12 @@ class Application extends Container {
         static::setInstance($this);
 
         $this->instance(Application::class, $this);
+
+        if ($this->runningInConsole()) {
+            $this->singleton(RequestContract::class, ConsoleRequest::class);
+        } else {
+            $this->singleton(RequestContract::class, HttpRequest::class);
+        }
     }
 
     /**

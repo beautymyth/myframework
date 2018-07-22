@@ -14,6 +14,11 @@ abstract class Controller {
     protected $objApp;
 
     /**
+     * 请求实例
+     */
+    protected $objRequest;
+
+    /**
      * 控制器方法对应的中间件
      * 方法名(小写):方法对应的中间件
      */
@@ -42,6 +47,7 @@ abstract class Controller {
      */
     public function callAction($strMethod, $objApp, $objRequest, $arrArguments = []) {
         $this->objApp = $objApp;
+        $this->objRequest = $objRequest;
         //获取中间件
         $arrMiddleware = $this->getMiddleware($strMethod);
         //调用中间件

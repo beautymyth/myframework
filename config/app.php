@@ -29,6 +29,7 @@ return [
          */
         Framework\Provider\Cache\CacheServiceProvider::class,
         Framework\Provider\View\ViewServiceProvider::class,
+        Framework\Provider\Security\DesServiceProvider::class,
     /**
      * 应用
      */
@@ -57,6 +58,11 @@ return [
          */
         'web' => [
             Framework\Service\Foundation\Middleware\Web\CheckAuth::class
+        ],
+        /**
+         * 控制台程序为空
+         */
+        'console' => [
         ]
     ],
     /**
@@ -79,7 +85,7 @@ return [
      */
     'uri_resolve_rule' => ['api'],
     /**
-     * 路由
+     * web/api路由
      * 1.配置uri对应的控制器
      * 2.如果没配置，则使用默认uri结构处理
      */
@@ -94,6 +100,19 @@ return [
      */
     'view' => [
         'login' => 'web/common/login.view'
+    ],
+    /**
+     * 控制台路由
+     * 1.配置uri对应的控制器
+     */
+    'console_route' => [
+        'send_wechat_msg_consumer' => 'Console\\SendWeChatMsgController@run'
+    ],
+    /**
+     * md5加密key值
+     */
+    'md5_key' => [
+        'mhr' => 'S&5zpvNxCF&uHK5P'
     ]
 ];
 

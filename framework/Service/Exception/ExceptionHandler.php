@@ -6,7 +6,7 @@ use Exception;
 use Framework\Facade\Config;
 use Framework\Facade\Request;
 use Framework\Service\Foundation\Application;
-use Framework\Service\Response\ResponseFactory;
+use Framework\Service\Http\ResponseFactory;
 use Framework\Contract\Exception\ExceptionHandler as ExceptionHandlerContract;
 
 class ExceptionHandler implements ExceptionHandlerContract {

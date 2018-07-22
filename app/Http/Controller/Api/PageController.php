@@ -2,6 +2,7 @@
 
 namespace App\Http\Controller\Api;
 
+use Framework\Facade\Des;
 use Framework\Facade\Config;
 use Framework\Contract\Cache\Cache;
 use App\Http\Middleware\Api\CheckValid;
@@ -29,7 +30,9 @@ class PageController extends ControllerBase {
     }
 
     public function funcB() {
-        return 'http://www.163.com';
+        $a = Des::passwordHash('abc123');
+        $b = password_verify('123456', $a);
+        return ['aa' => Des::md5('111', 'aa'), 'bb' => $a, 'cc' => $b];
     }
 
 }

@@ -4,7 +4,7 @@ namespace Framework\Service\Foundation\Middleware\All;
 
 use Closure;
 use Exception;
-use Framework\Service\Foundation\Request;
+use Framework\Contract\Http\Request;
 use Framework\Service\Exception\UriException;
 
 /**

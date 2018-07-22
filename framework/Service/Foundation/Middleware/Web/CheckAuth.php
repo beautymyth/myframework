@@ -5,7 +5,7 @@ namespace Framework\Service\Foundation\Middleware\Web;
 use Closure;
 use Exception;
 use Framework\Service\Auth\User;
-use Framework\Service\Foundation\Request;
+use Framework\Contract\Http\Request;
 use Framework\Service\Foundation\Application;
 use Framework\Service\Exception\AuthException;
 

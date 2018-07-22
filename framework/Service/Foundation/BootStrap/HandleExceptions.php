@@ -22,7 +22,16 @@ class HandleExceptions {
     /**
      * 处理未捕捉的异常
      */
-    public function handleException(Exception $objException) {
+    public function handleException($objException) {
+        //非Exception异常，进行处理
+        if (!$objException instanceof Exception) {
+            if (method_exists($objException, 'getMessage')) {
+                throw new Exception($objException->getMessage());
+            } else {
+                throw new Exception('未知错误');
+            }
+        }
+
         $this->getHandleException()->report($objException);
 
         if (!$this->objApp->runningInConsole()) {

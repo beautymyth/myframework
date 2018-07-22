@@ -4,7 +4,7 @@ namespace Framework\Service\Exception;
 
 use Exception;
 use Framework\Service\Foundation\Application;
-use Framework\Service\Response\ResponseFactory;
+use Framework\Service\Http\ResponseFactory;
 
 /**
  * 应用异常

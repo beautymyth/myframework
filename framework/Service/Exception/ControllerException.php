@@ -3,8 +3,10 @@
 namespace Framework\Service\Exception;
 
 use Exception;
+use Framework\Facade\Log;
+use Framework\Facade\Config;
 use Framework\Service\Foundation\Application;
-use Framework\Service\Response\ResponseFactory;
+use Framework\Service\Http\ResponseFactory;
 
 /**
  * 控制器异常
@@ -17,7 +19,13 @@ class ControllerException extends Exception {
      * @param Exception $objException
      */
     public function report(Application $objApp, Exception $objException) {
-        
+        $strMessage = $objException->getMessage();
+        $mixMessage = json_decode($strMessage, true);
+        if (is_array($mixMessage) && isset($mixMessage['err_msg'])) {
+            $strMessage = $mixMessage['err_msg'];
+        }
+        $strMessage = $strMessage . '，uri：' . $objApp->make('request')->getUri();
+        Log::log($strMessage, Config::get('const.Log.LOG_ERR'));
     }
 
     /**

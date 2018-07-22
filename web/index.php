@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * web index
+ */
 //设置项目根目录
 define('BASE_PATH', realpath(__DIR__ . '/../'));
 

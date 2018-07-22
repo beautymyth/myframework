@@ -3,10 +3,10 @@
 namespace Framework\Service\Foundation;
 
 use Framework\Facade\Config;
-use Framework\Service\Foundation\Request;
+use Framework\Contract\Http\Request;
 use Framework\Service\Foundation\Pipeline;
 use Framework\Service\Foundation\Application;
-use Framework\Service\Response\ResponseFactory;
+use Framework\Service\Http\ResponseFactory;
 use Framework\Service\Exception\ControllerException;
 
 /**
@@ -135,7 +135,11 @@ class Router {
      */
     protected function findControllerConfig($objRequest) {
         $strUri = $objRequest->getUri();
-        $strController = Config::get('app.route.' . $strUri);
+        if ($this->objApp->runningInConsole()) {
+            $strController = Config::get('app.console_route.' . $strUri);
+        } else {
+            $strController = Config::get('app.route.' . $strUri);
+        }
         if (!empty($strController)) {
             return $this->strNameSpace . $strController;
         }
@@ -165,10 +169,12 @@ class Router {
         if (count($arrUri) >= 2) {
             //控制器目录
             $strDirPath = $strControllerDir . implode('/', array_slice($arrUri, 0, count($arrUri) - 2));
-            $strControllerName = $arrUri[count($arrUri) - 2] . 'Controller.php';
-            foreach (scandir($strDirPath) as $strFileName) {
-                if (strtolower($strControllerName) == strtolower($strFileName)) {
-                    return $this->strNameSpace . implode('\\', array_slice($arrUri, 0, count($arrUri) - 2)) . '\\' . str_replace('.php', '', $strFileName) . '@' . $arrUri[count($arrUri) - 1];
+            if (is_dir($strDirPath)) {
+                $strControllerName = $arrUri[count($arrUri) - 2] . 'Controller.php';
+                foreach (scandir($strDirPath) as $strFileName) {
+                    if (strtolower($strControllerName) == strtolower($strFileName)) {
+                        return $this->strNameSpace . implode('\\', array_slice($arrUri, 0, count($arrUri) - 2)) . '\\' . str_replace('.php', '', $strFileName) . '@' . $arrUri[count($arrUri) - 1];
+                    }
                 }
             }
         }
@@ -179,10 +185,12 @@ class Router {
             if (count($arrUri) >= 1) {
                 //控制器目录
                 $strDirPath = $strControllerDir . implode('/', array_slice($arrUri, 0, count($arrUri) - 1));
-                $strControllerName = $arrUri[count($arrUri) - 1] . 'Controller.php';
-                foreach (scandir($strDirPath) as $strFileName) {
-                    if (strtolower($strControllerName) == strtolower($strFileName)) {
-                        return $this->strNameSpace . implode('\\', array_slice($arrUri, 0, count($arrUri) - 1)) . '\\' . str_replace('.php', '', $strFileName);
+                if (is_dir($strDirPath)) {
+                    $strControllerName = $arrUri[count($arrUri) - 1] . 'Controller.php';
+                    foreach (scandir($strDirPath) as $strFileName) {
+                        if (strtolower($strControllerName) == strtolower($strFileName)) {
+                            return $this->strNameSpace . implode('\\', array_slice($arrUri, 0, count($arrUri) - 1)) . '\\' . str_replace('.php', '', $strFileName);
+                        }
                     }
                 }
             }

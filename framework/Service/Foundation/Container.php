@@ -6,6 +6,7 @@ use Closure;
 use Exception;
 use ReflectionClass;
 use ReflectionParameter;
+use Framework\Facade\Log;
 use Framework\Service\Exception\ApplicationException;
 
 /**
@@ -149,7 +150,7 @@ class Container {
 
         //获取抽象类型的具体类型
         $mixConcrete = $this->getConcrete($strAbstract);
-
+        
         //构建实例
         $objObject = $this->build($mixConcrete);
 
@@ -239,7 +240,8 @@ class Container {
      * @return array
      */
     protected function getLastParameterOverride() {
-        return count($this->arrWith) ? end($this->arrWith) : [];
+        $a = count($this->arrWith) ? end($this->arrWith) : [];
+        return $a;
     }
 
     /**
@@ -277,7 +279,6 @@ class Container {
      */
     protected function resolveDependencies($arrDependencies) {
         $arrResults = [];
-
         foreach ($arrDependencies as $objDependency) {
             //如果解析参数中包含依赖项参数，则直接使用不需要解析
             if ($this->hasParameterOverride($objDependency)) {
@@ -332,7 +333,8 @@ class Container {
      */
     protected function resolveClass(ReflectionParameter $objParameter) {
         try {
-            return $this->make($objParameter->getClass()->name, $this->getLastParameterOverride());
+            //return $this->make($objParameter->getClass()->name, $this->getLastParameterOverride());
+            return $this->make($objParameter->getClass()->name);
         } catch (Exception $objException) {
             //解析失败，如果有默认值使用默认值
             if ($objParameter->isOptional()) {

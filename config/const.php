@@ -27,7 +27,11 @@ return [
         /**
          * REDISERR日志
          */
-        'LOG_REDISERR' => 'REDISERR'
+        'LOG_REDISERR' => 'REDISERR',
+        /**
+         * MQERR日志
+         */
+        'LOG_MQERR' => 'MESSAGEQUEUEERR'
     ]
 ];
 

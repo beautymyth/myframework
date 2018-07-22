@@ -4,6 +4,7 @@ namespace Framework\Service\Foundation;
 
 use Exception;
 use Framework\Facade\Config;
+use Framework\Contract\Http\Request;
 use Framework\Service\Foundation\Router;
 use Framework\Service\Foundation\Pipeline;
 use Framework\Contract\Exception\ExceptionHandler as ExceptionHandlerContract;
@@ -50,7 +51,7 @@ class HttpKernel {
     public function handle() {
         try {
             $this->bootstrap();
-            return $objResponse = $this->dispatch();
+            return $this->dispatch();
         } catch (Exception $objException) {
             $this->reportException($objException);
             return $this->renderException($objException);
